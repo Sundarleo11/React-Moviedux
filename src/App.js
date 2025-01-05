@@ -4,6 +4,9 @@ import './styles.css'
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MoviesGrid from './components/MoviesGrid';
+import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+import Watchlist from './components/Watchlist';
+
 
 
 function App() {
@@ -11,7 +14,25 @@ function App() {
     <div className="App">
       <div className='container'></div>
        <Header></Header>
-       <MoviesGrid></MoviesGrid>
+
+       <Router>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/watchlist">WatchList</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path="/" element={ <MoviesGrid></MoviesGrid>}> </Route>
+          <Route path="/watchlist" element={ <Watchlist></Watchlist>}> </Route>
+          
+        </Routes>
+       </Router>
+ 
       
       <Footer></Footer>
     </div>

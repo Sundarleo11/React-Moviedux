@@ -1,32 +1,43 @@
 import React from "react";
-import '../styles.css';
+import "../styles.css";
 
+export default function MovieCard({ movie, isWatchlist, toggleWatchList }) {
+  const handlerError = (e) => {
+    e.target.src = "images/default.jpg";
+  };
 
-export default function MovieCard({movie}){
-
-const handlerError=(e)=>{
-
-    e.target.src="images/default.jpg";
-};
-
-const getRatingClass=(rating)=>{
-    if(rating>=8) return "rating-good";
-    if(rating>5 && rating<8) return "rating-ok";
+  const getRatingClass = (rating) => {
+    if (rating >= 8) return "rating-good";
+    if (rating > 5 && rating < 8) return "rating-ok";
     return "rating-bad";
-
-}
-    return(
-        <div key={movie.id} className="movie-card" onError={handlerError}>
-        <img src={`images/${movie.image}`} alt={movie.title}></img>
-        <div className="movie-card-info">
+  };
+  return (
+    <div key={movie.id} className="movie-card" onError={handlerError}>
+      <img src={`images/${movie.image}`} alt={movie.title}></img>
+      <div className="movie-card-info">
         <p className="movie-card-title">{movie.title}</p>
-        <p className="movie-card-genre">{movie.genre}</p>
-        <p className={`movie-card-rating, ${getRatingClass(movie.rating)}`}>{movie.rating}</p>
-       
+
+        <div>
+          <span className="movie-card-genre">{movie.genre}</span>
+          <span
+            className={`movie-card-rating, ${getRatingClass(movie.rating)}`}
+          >
+            {movie.rating}
+          </span>
+        </div>
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={isWatchlist}
+            onChange={() => toggleWatchList(movie.id)}
+          ></input>
+          <span className="slider">
+            <span className="slider-label">
+              {isWatchlist ? "in Watchlist" : "Add Watch List"}
+            </span>
+          </span>
+        </label>
       </div>
     </div>
-    )
-
+  );
 }
-
-

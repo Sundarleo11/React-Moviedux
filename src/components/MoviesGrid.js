@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles.css";
 import MovieCard from "./MovieCard";
 
-export default function MoviesGrid() {
-  const [movies, setMovies] = useState([]);
+export default function MoviesGrid({movie,watchlist,toggleWatchList}) {
+ 
 
   const [searchTerm, setSearchTerm] = useState("");
   const [genra, setGenera] = useState("All Genres");
@@ -46,18 +46,14 @@ export default function MoviesGrid() {
     return movies.title.toLowerCase().includes(searchTerm.toLowerCase());
   }
 
-  const fliterMovie = movies.filter((movie) =>
+  const fliterMovie = movie.filter((movie) =>
   matchesgenra(movie,genra) && 
   matchesRating(movie,rating) &&
   matchSearchitem(movie,searchTerm)
     
   );
 
-  useEffect(() => {
-    fetch("movies.json")
-      .then((res) => res.json())
-      .then((data) => setMovies(data));
-  }, []);
+ 
 
   return (
     <div>
@@ -93,7 +89,7 @@ export default function MoviesGrid() {
        
       <div className="movies-grid">
         {fliterMovie.map((movie) => (
-          <MovieCard movie={movie} key={movie.id}></MovieCard>
+          <MovieCard movie={movie} key={movie.id} isWatchlist={watchlist.includes(movie.id)} toggleWatchList={toggleWatchList} ></MovieCard>
         ))}
       </div>
     </div>
